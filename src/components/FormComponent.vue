@@ -114,7 +114,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 /* Contenedor principal */
 .container {
   display: flex;
