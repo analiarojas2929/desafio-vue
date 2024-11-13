@@ -30,9 +30,7 @@
       <label>
         <span>Tipografía:</span>
         <select v-model="fontFamily">
-          <option value="Arial">Arial</option>
-          <option value="Courier New">Courier New</option>
-          <option value="Cursive">Cursive</option>
+          <option v-for="(font, index) in fonts" :key="index" :value="font">{{ font }}</option>
         </select>
       </label>
 
@@ -43,20 +41,14 @@
 
       <div class="font-size">
         <span>Tamaño de letra:</span>
-        <label>
-          <input type="radio" value="small" v-model="fontSize" /> Pequeño
-        </label>
-        <label>
-          <input type="radio" value="medium" v-model="fontSize" /> Mediano
-        </label>
-        <label>
-          <input type="radio" value="large" v-model="fontSize" /> Grande
+        <label v-for="(size, index) in fontSizes" :key="index">
+          <input type="radio" :value="size.value" v-model="fontSize" /> {{ size.label }}
         </label>
       </div>
     </div>
 
     <!-- Figura modificable (lado derecho) -->
-    <div v-if="showShape" :style="figureStyle" class="figure">
+    <div v-show="showShape" :style="figureStyle" :class="{ bordered: isOpaque }" class="figure">
       <span v-if="showText">{{ textContent }}</span>
     </div>
   </div>
@@ -75,6 +67,12 @@ export default {
       isOpaque: true,
       borderRadius: 20,
       showShape: true,
+      fonts: ['Arial', 'Courier New', 'Cursive'],
+      fontSizes: [
+        { label: 'Pequeño', value: 'small' },
+        { label: 'Mediano', value: 'medium' },
+        { label: 'Grande', value: 'large' },
+      ]
     };
   },
   computed: {
@@ -114,14 +112,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* Contenedor principal */
 .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 90px;
-  max-width: 800px;
+  gap: 30px;
+  max-width: 900px;
   margin: 40px auto;
   padding: 20px;
 }
@@ -129,7 +127,7 @@ export default {
 /* Sección de controles (lado izquierdo) */
 .controls {
   flex: 1;
-  width: 350px;
+  min-width: 300px;
   background-color: #2c3e50;
   padding: 20px;
   border-radius: 10px;
@@ -146,6 +144,7 @@ export default {
 
 .controls label span {
   flex: 1;
+  text-align: left;
 }
 
 textarea {
@@ -186,11 +185,15 @@ input[type="range"] {
   flex: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: #27ae60;
   color: white;
   border: 2px solid #fff;
   text-align: center;
+  border-radius: 20%;
   transition: all 0.3s ease;
-
+  width: 200px;
+  height: 200px;
 }
+
 </style>
