@@ -47,7 +47,6 @@
       </div>
     </div>
 
-    <!-- Figura modificable (lado derecho) -->
     <div v-show="showShape" :style="figureStyle" :class="{ bordered: isOpaque }" class="figure">
       <span v-if="showText">{{ textContent }}</span>
     </div>
